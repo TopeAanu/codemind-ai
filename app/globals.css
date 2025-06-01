@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Primary Colors */
+  --primary-900: #1e1b4b;
+  --primary-700: #3730a3;
+  --primary-500: #6366f1;
+  --primary-300: #a5b4fc;
+
+  /* Accent Colors */
+  --accent-green: #10b981;
+  --accent-blue: #06b6d4;
+  --accent-purple: #8b5cf6;
+
+  /* Neutral Colors */
+  --gray-900: #111827;
+  --gray-800: #1f2937;
+  --gray-700: #374151;
+  --gray-100: #f3f4f6;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  .glass {
+    @apply backdrop-blur-md bg-white/10 dark:bg-gray-900/20 border border-white/20 dark:border-gray-700/30;
+  }
+
+  .code-font {
+    font-family: var(--font-mono);
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-lg transition-colors;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 px-4 py-2 rounded-lg transition-colors;
+  }
+
+  .card {
+    @apply glass rounded-xl p-6 shadow-lg;
+  }
+
+  .input-field {
+    @apply w-full px-3 py-2 bg-white/5 dark:bg-gray-800/50 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all;
+  }
+}
