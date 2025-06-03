@@ -1,11 +1,33 @@
-"use client"
+"use client";
 
-import { useSelector } from "react-redux"
-import type { RootState } from "@/store"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
-import { Code2, FolderOpen, Search, MessageSquare, Github, Plus, TrendingUp } from "lucide-react"
+import { useSelector } from "react-redux";
+import type { RootState } from "@/store";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import {
+  Code2,
+  FolderOpen,
+  Search,
+  MessageSquare,
+  Github,
+  Plus,
+  TrendingUp,
+} from "lucide-react";
 
 const mockData = {
   stats: {
@@ -49,36 +71,36 @@ const mockData = {
     { name: "Sat", analyses: 8, chats: 5 },
     { name: "Sun", analyses: 6, chats: 3 },
   ],
-}
+};
 
 export default function DashboardPage() {
-  const { user } = useSelector((state: RootState) => state.auth)
+  const { user } = useSelector((state: RootState) => state.auth);
 
   const getActivityIcon = (type: string) => {
     switch (type) {
       case "analysis":
-        return <Search className="h-4 w-4" />
+        return <Search className="h-4 w-4" />;
       case "chat":
-        return <MessageSquare className="h-4 w-4" />
+        return <MessageSquare className="h-4 w-4" />;
       case "project":
-        return <FolderOpen className="h-4 w-4" />
+        return <FolderOpen className="h-4 w-4" />;
       default:
-        return <Code2 className="h-4 w-4" />
+        return <Code2 className="h-4 w-4" />;
     }
-  }
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case "completed":
-        return "bg-green-500"
+        return "bg-green-500";
       case "active":
-        return "bg-blue-500"
+        return "bg-blue-500";
       case "error":
-        return "bg-red-500"
+        return "bg-red-500";
       default:
-        return "bg-gray-500"
+        return "bg-gray-500";
     }
-  }
+  };
 
   return (
     <div className="space-y-6">
@@ -88,7 +110,9 @@ export default function DashboardPage() {
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
             Welcome back, {user?.name?.split(" ")[0]}!
           </h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">Here's what's happening with your projects today.</p>
+          <p className="text-gray-600 dark:text-gray-400 mt-1">
+            Here's what's happening with your projects today.
+          </p>
         </div>
         <div className="flex space-x-3">
           <Button className="btn-primary">
@@ -106,11 +130,15 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <Card className="glass">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Projects</CardTitle>
+            <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
+              Total Projects
+            </CardTitle>
             <FolderOpen className="h-4 w-4 text-primary-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">{mockData.stats.totalProjects}</div>
+            <div className="text-2xl font-bold text-gray-900 dark:text-white">
+              {mockData.stats.totalProjects}
+            </div>
             <p className="text-xs text-green-600 dark:text-green-400 flex items-center mt-1">
               <TrendingUp className="h-3 w-3 mr-1" />
               +2 from last month
@@ -120,11 +148,15 @@ export default function DashboardPage() {
 
         <Card className="glass">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">Code Analyses</CardTitle>
+            <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
+              Code Analyses
+            </CardTitle>
             <Search className="h-4 w-4 text-accent-blue" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">{mockData.stats.totalAnalyses}</div>
+            <div className="text-2xl font-bold text-gray-900 dark:text-white">
+              {mockData.stats.totalAnalyses}
+            </div>
             <p className="text-xs text-green-600 dark:text-green-400 flex items-center mt-1">
               <TrendingUp className="h-3 w-3 mr-1" />
               +23 this week
@@ -134,22 +166,32 @@ export default function DashboardPage() {
 
         <Card className="glass">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">GitHub Repos</CardTitle>
+            <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
+              GitHub Repos
+            </CardTitle>
             <Github className="h-4 w-4 text-gray-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">{mockData.stats.githubRepos}</div>
-            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">Connected repositories</p>
+            <div className="text-2xl font-bold text-gray-900 dark:text-white">
+              {mockData.stats.githubRepos}
+            </div>
+            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+              Connected repositories
+            </p>
           </CardContent>
         </Card>
 
         <Card className="glass">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">AI Chat Sessions</CardTitle>
+            <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
+              AI Chat Sessions
+            </CardTitle>
             <MessageSquare className="h-4 w-4 text-accent-purple" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">{mockData.stats.chatSessions}</div>
+            <div className="text-2xl font-bold text-gray-900 dark:text-white">
+              {mockData.stats.chatSessions}
+            </div>
             <p className="text-xs text-green-600 dark:text-green-400 flex items-center mt-1">
               <TrendingUp className="h-3 w-3 mr-1" />
               +8 this week
@@ -162,7 +204,9 @@ export default function DashboardPage() {
         {/* Activity Chart */}
         <Card className="glass">
           <CardHeader>
-            <CardTitle className="text-gray-900 dark:text-white">Weekly Activity</CardTitle>
+            <CardTitle className="text-gray-900 dark:text-white">
+              Weekly Activity
+            </CardTitle>
             <CardDescription className="text-gray-600 dark:text-gray-400">
               Your code analyses and AI chat sessions this week
             </CardDescription>
@@ -191,7 +235,9 @@ export default function DashboardPage() {
         {/* Recent Activity */}
         <Card className="glass">
           <CardHeader>
-            <CardTitle className="text-gray-900 dark:text-white">Recent Activity</CardTitle>
+            <CardTitle className="text-gray-900 dark:text-white">
+              Recent Activity
+            </CardTitle>
             <CardDescription className="text-gray-600 dark:text-gray-400">
               Your latest actions and project updates
             </CardDescription>
@@ -206,14 +252,24 @@ export default function DashboardPage() {
                     </div>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">{activity.title}</p>
+                    <p className="text-sm font-medium text-gray-900 dark:text-white">
+                      {activity.title}
+                    </p>
                     <div className="flex items-center space-x-2 mt-1">
-                      <p className="text-xs text-gray-600 dark:text-gray-400">{activity.project}</p>
-                      <div className={`w-2 h-2 rounded-full ${getStatusColor(activity.status)}`} />
+                      <p className="text-xs text-gray-600 dark:text-gray-400">
+                        {activity.project}
+                      </p>
+                      <div
+                        className={`w-2 h-2 rounded-full ${getStatusColor(
+                          activity.status
+                        )}`}
+                      />
                     </div>
                   </div>
                   <div className="flex-shrink-0">
-                    <p className="text-xs text-gray-500 dark:text-gray-400">{activity.timestamp}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      {activity.timestamp}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -228,8 +284,12 @@ export default function DashboardPage() {
       {/* Quick Actions */}
       <Card className="glass">
         <CardHeader>
-          <CardTitle className="text-gray-900 dark:text-white">Quick Actions</CardTitle>
-          <CardDescription className="text-gray-600 dark:text-gray-400">Get started with common tasks</CardDescription>
+          <CardTitle className="text-gray-900 dark:text-white">
+            Quick Actions
+          </CardTitle>
+          <CardDescription className="text-gray-600 dark:text-gray-400">
+            Get started with common tasks
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -249,5 +309,5 @@ export default function DashboardPage() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

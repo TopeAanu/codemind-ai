@@ -1,25 +1,42 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { useSelector, useDispatch } from "react-redux"
-import type { RootState } from "@/store"
-import { updateUser } from "@/store/slices/authSlice"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Switch } from "@/components/ui/switch"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { User, Github, Key, Upload, Camera, ExternalLink, Trash2, Plus, Settings, BarChart3 } from "lucide-react"
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import type { RootState } from "@/store";
+import { updateUser } from "@/store/slices/authSlice";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Switch } from "@/components/ui/switch";
+import { ThemedSelect, ThemedSelectItem } from "@/components/ui/themed-select";
+import {
+  User,
+  Github,
+  Key,
+  Upload,
+  Camera,
+  ExternalLink,
+  Trash2,
+  Plus,
+  Settings,
+  BarChart3,
+} from "lucide-react";
 
 export default function ProfilePage() {
-  const { user } = useSelector((state: RootState) => state.auth)
-  const { theme } = useSelector((state: RootState) => state.ui)
-  const dispatch = useDispatch()
+  const { user } = useSelector((state: RootState) => state.auth);
+  const { theme } = useSelector((state: RootState) => state.ui);
+  const dispatch = useDispatch();
 
   const [profileData, setProfileData] = useState({
     name: user?.name || "",
@@ -28,7 +45,7 @@ export default function ProfilePage() {
     location: "",
     website: "",
     company: "",
-  })
+  });
 
   const [preferences, setPreferences] = useState({
     emailNotifications: true,
@@ -37,7 +54,7 @@ export default function ProfilePage() {
     codeTheme: "dark",
     fontSize: "14",
     tabSize: "2",
-  })
+  });
 
   const [apiKeys, setApiKeys] = useState([
     {
@@ -54,7 +71,7 @@ export default function ProfilePage() {
       created: "2024-01-10",
       lastUsed: "2024-01-14",
     },
-  ])
+  ]);
 
   const mockStats = {
     totalAnalyses: 156,
@@ -63,52 +80,56 @@ export default function ProfilePage() {
     githubRepos: 8,
     joinDate: "2024-01-01",
     lastActive: "2024-01-15",
-  }
+  };
 
   const handleProfileUpdate = () => {
     dispatch(
       updateUser({
         name: profileData.name,
         email: profileData.email,
-      }),
-    )
+      })
+    );
     // In real app, would make API call to update profile
-    console.log("Profile updated:", profileData)
-  }
+    console.log("Profile updated:", profileData);
+  };
 
   const handleAvatarUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
+    const file = event.target.files?.[0];
     if (file) {
       // In real app, would upload to server and update user avatar
-      console.log("Avatar upload:", file)
+      console.log("Avatar upload:", file);
     }
-  }
+  };
 
   const connectGitHub = () => {
     // In real app, would initiate GitHub OAuth flow
-    console.log("Connect GitHub")
-  }
+    console.log("Connect GitHub");
+  };
 
   const disconnectGitHub = () => {
-    dispatch(updateUser({ githubConnected: false }))
-  }
+    dispatch(updateUser({ githubConnected: false }));
+  };
 
   const addApiKey = () => {
     // In real app, would show modal to add new API key
-    console.log("Add API key")
-  }
+    console.log("Add API key");
+  };
 
   const deleteApiKey = (id: string) => {
-    setApiKeys(apiKeys.filter((key) => key.id !== id))
-  }
+    setApiKeys(apiKeys.filter((key) => key.id !== id));
+  };
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Profile Settings</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">Manage your account settings and preferences</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            Profile Settings
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-1">
+            Manage your account settings and preferences
+          </p>
         </div>
       </div>
 
@@ -121,7 +142,9 @@ export default function ProfilePage() {
                 <User className="mr-2 h-5 w-5" />
                 Profile Information
               </CardTitle>
-              <CardDescription>Update your personal information and profile details</CardDescription>
+              <CardDescription>
+                Update your personal information and profile details
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               {/* Avatar */}
@@ -147,8 +170,12 @@ export default function ProfilePage() {
                   </label>
                 </div>
                 <div>
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-white">{user?.name}</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">{user?.email}</p>
+                  <h3 className="text-lg font-medium text-gray-900 dark:text-white">
+                    {user?.name}
+                  </h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    {user?.email}
+                  </p>
                   <Button variant="outline" size="sm" className="mt-2">
                     <Upload className="mr-2 h-4 w-4" />
                     Change Avatar
@@ -163,7 +190,9 @@ export default function ProfilePage() {
                   <Input
                     id="name"
                     value={profileData.name}
-                    onChange={(e) => setProfileData({ ...profileData, name: e.target.value })}
+                    onChange={(e) =>
+                      setProfileData({ ...profileData, name: e.target.value })
+                    }
                   />
                 </div>
                 <div className="space-y-2">
@@ -172,7 +201,9 @@ export default function ProfilePage() {
                     id="email"
                     type="email"
                     value={profileData.email}
-                    onChange={(e) => setProfileData({ ...profileData, email: e.target.value })}
+                    onChange={(e) =>
+                      setProfileData({ ...profileData, email: e.target.value })
+                    }
                   />
                 </div>
                 <div className="space-y-2">
@@ -180,7 +211,12 @@ export default function ProfilePage() {
                   <Input
                     id="company"
                     value={profileData.company}
-                    onChange={(e) => setProfileData({ ...profileData, company: e.target.value })}
+                    onChange={(e) =>
+                      setProfileData({
+                        ...profileData,
+                        company: e.target.value,
+                      })
+                    }
                     placeholder="Your company name"
                   />
                 </div>
@@ -189,7 +225,12 @@ export default function ProfilePage() {
                   <Input
                     id="location"
                     value={profileData.location}
-                    onChange={(e) => setProfileData({ ...profileData, location: e.target.value })}
+                    onChange={(e) =>
+                      setProfileData({
+                        ...profileData,
+                        location: e.target.value,
+                      })
+                    }
                     placeholder="City, Country"
                   />
                 </div>
@@ -198,7 +239,12 @@ export default function ProfilePage() {
                   <Input
                     id="website"
                     value={profileData.website}
-                    onChange={(e) => setProfileData({ ...profileData, website: e.target.value })}
+                    onChange={(e) =>
+                      setProfileData({
+                        ...profileData,
+                        website: e.target.value,
+                      })
+                    }
                     placeholder="https://yourwebsite.com"
                   />
                 </div>
@@ -207,7 +253,9 @@ export default function ProfilePage() {
                   <Textarea
                     id="bio"
                     value={profileData.bio}
-                    onChange={(e) => setProfileData({ ...profileData, bio: e.target.value })}
+                    onChange={(e) =>
+                      setProfileData({ ...profileData, bio: e.target.value })
+                    }
                     placeholder="Tell us about yourself..."
                     rows={3}
                   />
@@ -227,7 +275,9 @@ export default function ProfilePage() {
                 <Github className="mr-2 h-5 w-5" />
                 GitHub Integration
               </CardTitle>
-              <CardDescription>Connect your GitHub account to import repositories</CardDescription>
+              <CardDescription>
+                Connect your GitHub account to import repositories
+              </CardDescription>
             </CardHeader>
             <CardContent>
               {user?.githubConnected ? (
@@ -237,7 +287,9 @@ export default function ProfilePage() {
                       <Github className="h-5 w-5 text-white" />
                     </div>
                     <div>
-                      <p className="font-medium text-gray-900 dark:text-white">Connected to GitHub</p>
+                      <p className="font-medium text-gray-900 dark:text-white">
+                        Connected to GitHub
+                      </p>
                       <p className="text-sm text-gray-600 dark:text-gray-400">
                         @{user.name?.toLowerCase().replace(" ", "")}
                       </p>
@@ -248,7 +300,11 @@ export default function ProfilePage() {
                       <ExternalLink className="mr-2 h-4 w-4" />
                       View Profile
                     </Button>
-                    <Button variant="outline" size="sm" onClick={disconnectGitHub}>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={disconnectGitHub}
+                    >
                       Disconnect
                     </Button>
                   </div>
@@ -256,7 +312,9 @@ export default function ProfilePage() {
               ) : (
                 <div className="text-center py-6">
                   <Github className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Connect GitHub</h3>
+                  <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                    Connect GitHub
+                  </h3>
                   <p className="text-gray-600 dark:text-gray-400 mb-4">
                     Import your repositories and sync your code for analysis
                   </p>
@@ -276,7 +334,9 @@ export default function ProfilePage() {
                 <Key className="mr-2 h-5 w-5" />
                 API Keys
               </CardTitle>
-              <CardDescription>Manage your API keys for external integrations</CardDescription>
+              <CardDescription>
+                Manage your API keys for external integrations
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {apiKeys.map((apiKey) => (
@@ -285,8 +345,12 @@ export default function ProfilePage() {
                   className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg"
                 >
                   <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white">{apiKey.name}</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 font-mono">{apiKey.key}</p>
+                    <h4 className="font-medium text-gray-900 dark:text-white">
+                      {apiKey.name}
+                    </h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 font-mono">
+                      {apiKey.key}
+                    </p>
                     <p className="text-xs text-gray-500 dark:text-gray-400">
                       Created: {apiKey.created} • Last used: {apiKey.lastUsed}
                     </p>
@@ -321,24 +385,34 @@ export default function ProfilePage() {
             </CardHeader>
             <CardContent className="space-y-3">
               <div className="flex justify-between">
-                <span className="text-sm text-gray-600 dark:text-gray-400">Total Analyses</span>
+                <span className="text-sm text-gray-600 dark:text-gray-400">
+                  Total Analyses
+                </span>
                 <Badge variant="secondary">{mockStats.totalAnalyses}</Badge>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-gray-600 dark:text-gray-400">Projects</span>
+                <span className="text-sm text-gray-600 dark:text-gray-400">
+                  Projects
+                </span>
                 <Badge variant="secondary">{mockStats.totalProjects}</Badge>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-gray-600 dark:text-gray-400">Chat Sessions</span>
+                <span className="text-sm text-gray-600 dark:text-gray-400">
+                  Chat Sessions
+                </span>
                 <Badge variant="secondary">{mockStats.totalChatSessions}</Badge>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-gray-600 dark:text-gray-400">GitHub Repos</span>
+                <span className="text-sm text-gray-600 dark:text-gray-400">
+                  GitHub Repos
+                </span>
                 <Badge variant="secondary">{mockStats.githubRepos}</Badge>
               </div>
               <div className="pt-2 border-t border-gray-200 dark:border-gray-700">
                 <div className="flex justify-between">
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Member since</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">
+                    Member since
+                  </span>
                   <span className="text-sm text-gray-900 dark:text-white">
                     {new Date(mockStats.joinDate).toLocaleDateString()}
                   </span>
@@ -364,7 +438,12 @@ export default function ProfilePage() {
                   <Switch
                     id="email-notifications"
                     checked={preferences.emailNotifications}
-                    onCheckedChange={(checked) => setPreferences({ ...preferences, emailNotifications: checked })}
+                    onCheckedChange={(checked) =>
+                      setPreferences({
+                        ...preferences,
+                        emailNotifications: checked,
+                      })
+                    }
                   />
                 </div>
                 <div className="flex items-center justify-between">
@@ -374,7 +453,12 @@ export default function ProfilePage() {
                   <Switch
                     id="push-notifications"
                     checked={preferences.pushNotifications}
-                    onCheckedChange={(checked) => setPreferences({ ...preferences, pushNotifications: checked })}
+                    onCheckedChange={(checked) =>
+                      setPreferences({
+                        ...preferences,
+                        pushNotifications: checked,
+                      })
+                    }
                   />
                 </div>
                 <div className="flex items-center justify-between">
@@ -384,7 +468,9 @@ export default function ProfilePage() {
                   <Switch
                     id="weekly-digest"
                     checked={preferences.weeklyDigest}
-                    onCheckedChange={(checked) => setPreferences({ ...preferences, weeklyDigest: checked })}
+                    onCheckedChange={(checked) =>
+                      setPreferences({ ...preferences, weeklyDigest: checked })
+                    }
                   />
                 </div>
               </div>
@@ -394,59 +480,50 @@ export default function ProfilePage() {
                   <Label htmlFor="code-theme" className="text-sm">
                     Code Editor Theme
                   </Label>
-                  <Select
+                  <ThemedSelect
                     value={preferences.codeTheme}
-                    onValueChange={(value) => setPreferences({ ...preferences, codeTheme: value })}
+                    onValueChange={(value) =>
+                      setPreferences({ ...preferences, codeTheme: value })
+                    }
                   >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="dark">Dark</SelectItem>
-                      <SelectItem value="light">Light</SelectItem>
-                      <SelectItem value="monokai">Monokai</SelectItem>
-                      <SelectItem value="github">GitHub</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    <ThemedSelectItem value="dark">Dark</ThemedSelectItem>
+                    <ThemedSelectItem value="light">Light</ThemedSelectItem>
+                    <ThemedSelectItem value="monokai">Monokai</ThemedSelectItem>
+                    <ThemedSelectItem value="github">GitHub</ThemedSelectItem>
+                  </ThemedSelect>
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="font-size" className="text-sm">
                     Font Size
                   </Label>
-                  <Select
+                  <ThemedSelect
                     value={preferences.fontSize}
-                    onValueChange={(value) => setPreferences({ ...preferences, fontSize: value })}
+                    onValueChange={(value) =>
+                      setPreferences({ ...preferences, fontSize: value })
+                    }
                   >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="12">12px</SelectItem>
-                      <SelectItem value="14">14px</SelectItem>
-                      <SelectItem value="16">16px</SelectItem>
-                      <SelectItem value="18">18px</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    <ThemedSelectItem value="12">12px</ThemedSelectItem>
+                    <ThemedSelectItem value="14">14px</ThemedSelectItem>
+                    <ThemedSelectItem value="16">16px</ThemedSelectItem>
+                    <ThemedSelectItem value="18">18px</ThemedSelectItem>
+                  </ThemedSelect>
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="tab-size" className="text-sm">
                     Tab Size
                   </Label>
-                  <Select
+                  <ThemedSelect
                     value={preferences.tabSize}
-                    onValueChange={(value) => setPreferences({ ...preferences, tabSize: value })}
+                    onValueChange={(value) =>
+                      setPreferences({ ...preferences, tabSize: value })
+                    }
                   >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="2">2 spaces</SelectItem>
-                      <SelectItem value="4">4 spaces</SelectItem>
-                      <SelectItem value="8">8 spaces</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    <ThemedSelectItem value="2">2 spaces</ThemedSelectItem>
+                    <ThemedSelectItem value="4">4 spaces</ThemedSelectItem>
+                    <ThemedSelectItem value="8">8 spaces</ThemedSelectItem>
+                  </ThemedSelect>
                 </div>
               </div>
             </CardContent>
@@ -454,5 +531,5 @@ export default function ProfilePage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

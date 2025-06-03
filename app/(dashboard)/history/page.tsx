@@ -1,12 +1,17 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Badge } from "@/components/ui/badge"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
+import { ThemedSelect, ThemedSelectItem } from "@/components/ui/themed-select";
+import { Badge } from "@/components/ui/badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   Search,
   Filter,
@@ -25,7 +30,7 @@ import {
   Clock,
   CheckCircle,
   XCircle,
-} from "lucide-react"
+} from "lucide-react";
 
 const mockHistory = [
   {
@@ -83,90 +88,98 @@ const mockHistory = [
     language: "JavaScript",
     duration: "12m 45s",
   },
-]
+];
 
-const analysisTypes = ["All", "explain", "debug", "test", "docs"]
-const statusTypes = ["All", "completed", "error", "pending"]
-const itemTypes = ["All", "analysis", "chat"]
+const analysisTypes = ["All", "explain", "debug", "test", "docs"];
+const statusTypes = ["All", "completed", "error", "pending"];
+const itemTypes = ["All", "analysis", "chat"];
 
 export default function HistoryPage() {
-  const [searchQuery, setSearchQuery] = useState("")
-  const [filterType, setFilterType] = useState("All")
-  const [filterStatus, setFilterStatus] = useState("All")
-  const [filterAnalysis, setFilterAnalysis] = useState("All")
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterType, setFilterType] = useState("All");
+  const [filterStatus, setFilterStatus] = useState("All");
+  const [filterAnalysis, setFilterAnalysis] = useState("All");
 
   const filteredHistory = mockHistory.filter((item) => {
     const matchesSearch =
       item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.project.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesType = filterType === "All" || item.type === filterType
-    const matchesStatus = filterStatus === "All" || item.status === filterStatus
-    const matchesAnalysis = filterAnalysis === "All" || item.analysisType === filterAnalysis
+      item.project.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesType = filterType === "All" || item.type === filterType;
+    const matchesStatus =
+      filterStatus === "All" || item.status === filterStatus;
+    const matchesAnalysis =
+      filterAnalysis === "All" || item.analysisType === filterAnalysis;
 
-    return matchesSearch && matchesType && matchesStatus && matchesAnalysis
-  })
+    return matchesSearch && matchesType && matchesStatus && matchesAnalysis;
+  });
 
   const getTypeIcon = (type: string, analysisType?: string) => {
-    if (type === "chat") return <MessageSquare className="h-4 w-4" />
+    if (type === "chat") return <MessageSquare className="h-4 w-4" />;
 
     switch (analysisType) {
       case "debug":
-        return <Bug className="h-4 w-4" />
+        return <Bug className="h-4 w-4" />;
       case "test":
-        return <TestTube className="h-4 w-4" />
+        return <TestTube className="h-4 w-4" />;
       case "docs":
-        return <FileText className="h-4 w-4" />
+        return <FileText className="h-4 w-4" />;
       case "explain":
-        return <HelpCircle className="h-4 w-4" />
+        return <HelpCircle className="h-4 w-4" />;
       default:
-        return <Code2 className="h-4 w-4" />
+        return <Code2 className="h-4 w-4" />;
     }
-  }
+  };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "completed":
-        return <CheckCircle className="h-4 w-4 text-green-500" />
+        return <CheckCircle className="h-4 w-4 text-green-500" />;
       case "error":
-        return <XCircle className="h-4 w-4 text-red-500" />
+        return <XCircle className="h-4 w-4 text-red-500" />;
       case "pending":
-        return <Clock className="h-4 w-4 text-yellow-500" />
+        return <Clock className="h-4 w-4 text-yellow-500" />;
       default:
-        return <Clock className="h-4 w-4 text-gray-500" />
+        return <Clock className="h-4 w-4 text-gray-500" />;
     }
-  }
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case "completed":
-        return "bg-green-500"
+        return "bg-green-500";
       case "error":
-        return "bg-red-500"
+        return "bg-red-500";
       case "pending":
-        return "bg-yellow-500"
+        return "bg-yellow-500";
       default:
-        return "bg-gray-500"
+        return "bg-gray-500";
     }
-  }
+  };
 
   const formatDate = (timestamp: string) => {
-    const date = new Date(timestamp)
-    const now = new Date()
-    const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60))
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diffInHours = Math.floor(
+      (now.getTime() - date.getTime()) / (1000 * 60 * 60)
+    );
 
-    if (diffInHours < 1) return "Just now"
-    if (diffInHours < 24) return `${diffInHours}h ago`
-    if (diffInHours < 48) return "Yesterday"
-    return date.toLocaleDateString()
-  }
+    if (diffInHours < 1) return "Just now";
+    if (diffInHours < 24) return `${diffInHours}h ago`;
+    if (diffInHours < 48) return "Yesterday";
+    return date.toLocaleDateString();
+  };
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Analysis History</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">View and manage your past analyses and chat sessions</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            Analysis History
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-1">
+            View and manage your past analyses and chat sessions
+          </p>
         </div>
         <div className="flex space-x-3">
           <Button variant="outline">
@@ -195,44 +208,44 @@ export default function HistoryPage() {
             </div>
 
             <div className="flex space-x-2">
-              <Select value={filterType} onValueChange={setFilterType}>
-                <SelectTrigger className="w-32">
-                  <SelectValue placeholder="Type" />
-                </SelectTrigger>
-                <SelectContent>
-                  {itemTypes.map((type) => (
-                    <SelectItem key={type} value={type}>
-                      {type.charAt(0).toUpperCase() + type.slice(1)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <ThemedSelect
+                value={filterType}
+                onValueChange={setFilterType}
+                className="w-32"
+                placeholder="Type"
+              >
+                {itemTypes.map((type) => (
+                  <ThemedSelectItem key={type} value={type}>
+                    {type.charAt(0).toUpperCase() + type.slice(1)}
+                  </ThemedSelectItem>
+                ))}
+              </ThemedSelect>
 
-              <Select value={filterAnalysis} onValueChange={setFilterAnalysis}>
-                <SelectTrigger className="w-32">
-                  <SelectValue placeholder="Analysis" />
-                </SelectTrigger>
-                <SelectContent>
-                  {analysisTypes.map((type) => (
-                    <SelectItem key={type} value={type}>
-                      {type.charAt(0).toUpperCase() + type.slice(1)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <ThemedSelect
+                value={filterAnalysis}
+                onValueChange={setFilterAnalysis}
+                className="w-32"
+                placeholder="Analysis"
+              >
+                {analysisTypes.map((type) => (
+                  <ThemedSelectItem key={type} value={type}>
+                    {type.charAt(0).toUpperCase() + type.slice(1)}
+                  </ThemedSelectItem>
+                ))}
+              </ThemedSelect>
 
-              <Select value={filterStatus} onValueChange={setFilterStatus}>
-                <SelectTrigger className="w-32">
-                  <SelectValue placeholder="Status" />
-                </SelectTrigger>
-                <SelectContent>
-                  {statusTypes.map((status) => (
-                    <SelectItem key={status} value={status}>
-                      {status.charAt(0).toUpperCase() + status.slice(1)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <ThemedSelect
+                value={filterStatus}
+                onValueChange={setFilterStatus}
+                className="w-32"
+                placeholder="Status"
+              >
+                {statusTypes.map((status) => (
+                  <ThemedSelectItem key={status} value={status}>
+                    {status.charAt(0).toUpperCase() + status.slice(1)}
+                  </ThemedSelectItem>
+                ))}
+              </ThemedSelect>
             </div>
           </div>
         </CardContent>
@@ -244,9 +257,14 @@ export default function HistoryPage() {
           <Card className="glass">
             <CardContent className="p-12 text-center">
               <Clock className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No history found</h3>
+              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                No history found
+              </h3>
               <p className="text-gray-600 dark:text-gray-400">
-                {searchQuery || filterType !== "All" || filterStatus !== "All" || filterAnalysis !== "All"
+                {searchQuery ||
+                filterType !== "All" ||
+                filterStatus !== "All" ||
+                filterAnalysis !== "All"
                   ? "Try adjusting your search or filter criteria"
                   : "Your analysis history will appear here once you start using CodeMind AI"}
               </p>
@@ -254,15 +272,22 @@ export default function HistoryPage() {
           </Card>
         ) : (
           filteredHistory.map((item) => (
-            <Card key={item.id} className="glass hover:shadow-lg transition-all duration-200">
+            <Card
+              key={item.id}
+              className="glass hover:shadow-lg transition-all duration-200"
+            >
               <CardContent className="p-6">
                 <div className="flex items-start justify-between">
                   <div className="flex items-start space-x-4 flex-1">
-                    <div className="flex-shrink-0 mt-1">{getTypeIcon(item.type, item.analysisType)}</div>
+                    <div className="flex-shrink-0 mt-1">
+                      {getTypeIcon(item.type, item.analysisType)}
+                    </div>
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center space-x-2 mb-1">
-                        <h3 className="text-lg font-medium text-gray-900 dark:text-white truncate">{item.title}</h3>
+                        <h3 className="text-lg font-medium text-gray-900 dark:text-white truncate">
+                          {item.title}
+                        </h3>
                         <Badge variant="outline" className="capitalize">
                           {item.type}
                         </Badge>
@@ -273,7 +298,9 @@ export default function HistoryPage() {
                         )}
                       </div>
 
-                      <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Project: {item.project}</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                        Project: {item.project}
+                      </p>
 
                       <div className="flex items-center space-x-4 text-xs text-gray-500 dark:text-gray-400">
                         <div className="flex items-center space-x-1">
@@ -285,7 +312,11 @@ export default function HistoryPage() {
                           <span>{item.duration}</span>
                         </div>
                         <div className="flex items-center space-x-1">
-                          <div className={`w-2 h-2 rounded-full ${getStatusColor(item.status)}`} />
+                          <div
+                            className={`w-2 h-2 rounded-full ${getStatusColor(
+                              item.status
+                            )}`}
+                          />
                           <span className="capitalize">{item.status}</span>
                         </div>
                         <Badge variant="outline" className="text-xs">
@@ -344,5 +375,5 @@ export default function HistoryPage() {
         </div>
       )}
     </div>
-  )
+  );
 }

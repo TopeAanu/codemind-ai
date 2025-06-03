@@ -17,13 +17,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { ThemedSelect, ThemedSelectItem } from "@/components/ui/themed-select";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -337,24 +331,21 @@ export default function ProjectsPage() {
                   className="pl-10"
                 />
               </div>
-              <Select
+              <ThemedSelect
                 value={filterLanguage}
                 onValueChange={(value) => dispatch(setFilterLanguage(value))}
+                className="w-40"
+                placeholder="Language"
               >
-                <SelectTrigger className="w-40">
-                  <SelectValue placeholder="Language" />
-                </SelectTrigger>
-                <SelectContent>
-                  {languages.map((lang) => (
-                    <SelectItem
-                      key={lang}
-                      value={lang === "All" ? "all" : lang}
-                    >
-                      {lang}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                {languages.map((lang) => (
+                  <ThemedSelectItem
+                    key={lang}
+                    value={lang === "All" ? "all" : lang}
+                  >
+                    {lang}
+                  </ThemedSelectItem>
+                ))}
+              </ThemedSelect>
             </div>
 
             <div className="flex items-center space-x-2">

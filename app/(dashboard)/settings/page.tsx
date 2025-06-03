@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Switch } from "@/components/ui/switch"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { ThemedSelect, ThemedSelectItem } from "@/components/ui/themed-select"
 import { Separator } from "@/components/ui/separator"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import {
@@ -157,49 +157,40 @@ export default function SettingsPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="language">Language</Label>
-                  <Select value={settings.language} onValueChange={(value) => handleSettingChange("language", value)}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="en">English</SelectItem>
-                      <SelectItem value="es">Spanish</SelectItem>
-                      <SelectItem value="fr">French</SelectItem>
-                      <SelectItem value="de">German</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <ThemedSelect
+                    value={settings.language}
+                    onValueChange={(value) => handleSettingChange("language", value)}
+                  >
+                    <ThemedSelectItem value="en">English</ThemedSelectItem>
+                    <ThemedSelectItem value="es">Spanish</ThemedSelectItem>
+                    <ThemedSelectItem value="fr">French</ThemedSelectItem>
+                    <ThemedSelectItem value="de">German</ThemedSelectItem>
+                  </ThemedSelect>
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="timezone">Timezone</Label>
-                  <Select value={settings.timezone} onValueChange={(value) => handleSettingChange("timezone", value)}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="UTC">UTC</SelectItem>
-                      <SelectItem value="EST">Eastern Time</SelectItem>
-                      <SelectItem value="PST">Pacific Time</SelectItem>
-                      <SelectItem value="GMT">Greenwich Mean Time</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <ThemedSelect
+                    value={settings.timezone}
+                    onValueChange={(value) => handleSettingChange("timezone", value)}
+                  >
+                    <ThemedSelectItem value="UTC">UTC</ThemedSelectItem>
+                    <ThemedSelectItem value="EST">Eastern Time</ThemedSelectItem>
+                    <ThemedSelectItem value="PST">Pacific Time</ThemedSelectItem>
+                    <ThemedSelectItem value="GMT">Greenwich Mean Time</ThemedSelectItem>
+                  </ThemedSelect>
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="dateFormat">Date Format</Label>
-                  <Select
+                  <ThemedSelect
                     value={settings.dateFormat}
                     onValueChange={(value) => handleSettingChange("dateFormat", value)}
                   >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="MM/DD/YYYY">MM/DD/YYYY</SelectItem>
-                      <SelectItem value="DD/MM/YYYY">DD/MM/YYYY</SelectItem>
-                      <SelectItem value="YYYY-MM-DD">YYYY-MM-DD</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    <ThemedSelectItem value="MM/DD/YYYY">MM/DD/YYYY</ThemedSelectItem>
+                    <ThemedSelectItem value="DD/MM/YYYY">DD/MM/YYYY</ThemedSelectItem>
+                    <ThemedSelectItem value="YYYY-MM-DD">YYYY-MM-DD</ThemedSelectItem>
+                  </ThemedSelect>
                 </div>
               </div>
             </CardContent>
@@ -251,48 +242,42 @@ export default function SettingsPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="codeTheme">Editor Theme</Label>
-                  <Select value={settings.codeTheme} onValueChange={(value) => handleSettingChange("codeTheme", value)}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="dark">Dark</SelectItem>
-                      <SelectItem value="light">Light</SelectItem>
-                      <SelectItem value="monokai">Monokai</SelectItem>
-                      <SelectItem value="github">GitHub</SelectItem>
-                      <SelectItem value="dracula">Dracula</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <ThemedSelect
+                    value={settings.codeTheme}
+                    onValueChange={(value) => handleSettingChange("codeTheme", value)}
+                  >
+                    <ThemedSelectItem value="dark">Dark</ThemedSelectItem>
+                    <ThemedSelectItem value="light">Light</ThemedSelectItem>
+                    <ThemedSelectItem value="monokai">Monokai</ThemedSelectItem>
+                    <ThemedSelectItem value="github">GitHub</ThemedSelectItem>
+                    <ThemedSelectItem value="dracula">Dracula</ThemedSelectItem>
+                  </ThemedSelect>
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="fontSize">Font Size</Label>
-                  <Select value={settings.fontSize} onValueChange={(value) => handleSettingChange("fontSize", value)}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="12">12px</SelectItem>
-                      <SelectItem value="14">14px</SelectItem>
-                      <SelectItem value="16">16px</SelectItem>
-                      <SelectItem value="18">18px</SelectItem>
-                      <SelectItem value="20">20px</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <ThemedSelect
+                    value={settings.fontSize}
+                    onValueChange={(value) => handleSettingChange("fontSize", value)}
+                  >
+                    <ThemedSelectItem value="12">12px</ThemedSelectItem>
+                    <ThemedSelectItem value="14">14px</ThemedSelectItem>
+                    <ThemedSelectItem value="16">16px</ThemedSelectItem>
+                    <ThemedSelectItem value="18">18px</ThemedSelectItem>
+                    <ThemedSelectItem value="20">20px</ThemedSelectItem>
+                  </ThemedSelect>
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="tabSize">Tab Size</Label>
-                  <Select value={settings.tabSize} onValueChange={(value) => handleSettingChange("tabSize", value)}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="2">2 spaces</SelectItem>
-                      <SelectItem value="4">4 spaces</SelectItem>
-                      <SelectItem value="8">8 spaces</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <ThemedSelect
+                    value={settings.tabSize}
+                    onValueChange={(value) => handleSettingChange("tabSize", value)}
+                  >
+                    <ThemedSelectItem value="2">2 spaces</ThemedSelectItem>
+                    <ThemedSelectItem value="4">4 spaces</ThemedSelectItem>
+                    <ThemedSelectItem value="8">8 spaces</ThemedSelectItem>
+                  </ThemedSelect>
                 </div>
               </div>
 
@@ -386,47 +371,38 @@ export default function SettingsPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="aiModel">AI Model</Label>
-                  <Select value={settings.aiModel} onValueChange={(value) => handleSettingChange("aiModel", value)}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="gpt-4">GPT-4</SelectItem>
-                      <SelectItem value="gpt-3.5-turbo">GPT-3.5 Turbo</SelectItem>
-                      <SelectItem value="claude-3">Claude 3</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <ThemedSelect
+                    value={settings.aiModel}
+                    onValueChange={(value) => handleSettingChange("aiModel", value)}
+                  >
+                    <ThemedSelectItem value="gpt-4">GPT-4</ThemedSelectItem>
+                    <ThemedSelectItem value="gpt-3.5-turbo">GPT-3.5 Turbo</ThemedSelectItem>
+                    <ThemedSelectItem value="claude-3">Claude 3</ThemedSelectItem>
+                  </ThemedSelect>
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="maxTokens">Max Tokens</Label>
-                  <Select value={settings.maxTokens} onValueChange={(value) => handleSettingChange("maxTokens", value)}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1024">1,024</SelectItem>
-                      <SelectItem value="2048">2,048</SelectItem>
-                      <SelectItem value="4096">4,096</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <ThemedSelect
+                    value={settings.maxTokens}
+                    onValueChange={(value) => handleSettingChange("maxTokens", value)}
+                  >
+                    <ThemedSelectItem value="1024">1,024</ThemedSelectItem>
+                    <ThemedSelectItem value="2048">2,048</ThemedSelectItem>
+                    <ThemedSelectItem value="4096">4,096</ThemedSelectItem>
+                  </ThemedSelect>
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="temperature">Temperature</Label>
-                  <Select
+                  <ThemedSelect
                     value={settings.temperature}
                     onValueChange={(value) => handleSettingChange("temperature", value)}
                   >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="0.1">0.1 (Focused)</SelectItem>
-                      <SelectItem value="0.7">0.7 (Balanced)</SelectItem>
-                      <SelectItem value="1.0">1.0 (Creative)</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    <ThemedSelectItem value="0.1">0.1 (Focused)</ThemedSelectItem>
+                    <ThemedSelectItem value="0.7">0.7 (Balanced)</ThemedSelectItem>
+                    <ThemedSelectItem value="1.0">1.0 (Creative)</ThemedSelectItem>
+                  </ThemedSelect>
                 </div>
               </div>
 

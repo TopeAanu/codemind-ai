@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import { useSelector, useDispatch } from "react-redux"
-import type { RootState } from "@/store"
-import { toggleTheme, toggleMobileMenu } from "@/store/slices/uiSlice"
-import { logout } from "@/store/slices/authSlice"
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
+import { useSelector, useDispatch } from "react-redux";
+import type { RootState } from "@/store";
+import { toggleTheme, toggleMobileMenu } from "@/store/slices/uiSlice";
+import { logout } from "@/store/slices/authSlice";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,30 +13,45 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
-import { Bell, Search, Sun, Moon, User, Settings, LogOut, Menu, Github } from "lucide-react"
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import {
+  Bell,
+  Search,
+  Sun,
+  Moon,
+  User,
+  Settings,
+  LogOut,
+  Menu,
+  Github,
+} from "lucide-react";
 
 export function Header() {
-  const { theme, sidebarOpen } = useSelector((state: RootState) => state.ui)
-  const { user } = useSelector((state: RootState) => state.auth)
-  const dispatch = useDispatch()
-  const router = useRouter()
+  const { theme, sidebarOpen } = useSelector((state: RootState) => state.ui);
+  const { user } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   const handleLogout = () => {
-    dispatch(logout())
-    router.push("/login")
-  }
+    dispatch(logout());
+    router.push("/login");
+  };
 
   return (
     <header
-      className={`fixed top-0 right-0 z-40 h-16 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 transition-all duration-300 ${
+      className={`fixed top-0 right-0 z-40 h-16 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 transition-all duration-300 ${
         sidebarOpen ? "left-64" : "left-16"
       }`}
     >
       <div className="flex items-center justify-between h-full px-6">
         {/* Mobile menu button */}
-        <Button variant="ghost" size="icon" className="md:hidden" onClick={() => dispatch(toggleMobileMenu())}>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="md:hidden"
+          onClick={() => dispatch(toggleMobileMenu())}
+        >
           <Menu className="h-5 w-5" />
         </Button>
 
@@ -54,8 +69,16 @@ export function Header() {
         {/* Right side actions */}
         <div className="flex items-center space-x-4">
           {/* Theme toggle */}
-          <Button variant="ghost" size="icon" onClick={() => dispatch(toggleTheme())}>
-            {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => dispatch(toggleTheme())}
+          >
+            {theme === "dark" ? (
+              <Sun className="h-5 w-5" />
+            ) : (
+              <Moon className="h-5 w-5" />
+            )}
           </Button>
 
           {/* Notifications */}
@@ -78,8 +101,12 @@ export function Header() {
             <DropdownMenuContent className="w-56" align="end" forceMount>
               <DropdownMenuLabel className="font-normal">
                 <div className="flex flex-col space-y-1">
-                  <p className="text-sm font-medium leading-none">{user?.name}</p>
-                  <p className="text-xs leading-none text-muted-foreground">{user?.email}</p>
+                  <p className="text-sm font-medium leading-none">
+                    {user?.name}
+                  </p>
+                  <p className="text-xs leading-none text-muted-foreground">
+                    {user?.email}
+                  </p>
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
@@ -107,5 +134,5 @@ export function Header() {
         </div>
       </div>
     </header>
-  )
+  );
 }

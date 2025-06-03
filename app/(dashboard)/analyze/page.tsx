@@ -1,16 +1,22 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { useSelector, useDispatch } from "react-redux"
-import type { RootState } from "@/store"
-import { setCode, setLanguage, setAnalysisType, startAnalysis, completeAnalysis } from "@/store/slices/analysisSlice"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Badge } from "@/components/ui/badge"
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import type { RootState } from "@/store";
+import {
+  setCode,
+  setLanguage,
+  setAnalysisType,
+  startAnalysis,
+  completeAnalysis,
+} from "@/store/slices/analysisSlice";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
+import { ThemedSelect, ThemedSelectItem } from "@/components/ui/themed-select";
+import { Badge } from "@/components/ui/badge";
 import {
   Play,
   Upload,
@@ -24,9 +30,20 @@ import {
   HelpCircle,
   Loader2,
   Search,
-} from "lucide-react"
+} from "lucide-react";
 
-const languages = ["javascript", "typescript", "python", "java", "go", "rust", "cpp", "csharp", "php", "ruby"]
+const languages = [
+  "javascript",
+  "typescript",
+  "python",
+  "java",
+  "go",
+  "rust",
+  "cpp",
+  "csharp",
+  "php",
+  "ruby",
+];
 
 const analysisTypes = [
   {
@@ -35,38 +52,57 @@ const analysisTypes = [
     icon: HelpCircle,
     description: "Get detailed explanations of how your code works",
   },
-  { value: "debug", label: "Debug Issues", icon: Bug, description: "Find and fix bugs in your code" },
-  { value: "test", label: "Generate Tests", icon: TestTube, description: "Create comprehensive test cases" },
-  { value: "docs", label: "Generate Docs", icon: FileText, description: "Generate documentation for your code" },
-]
+  {
+    value: "debug",
+    label: "Debug Issues",
+    icon: Bug,
+    description: "Find and fix bugs in your code",
+  },
+  {
+    value: "test",
+    label: "Generate Tests",
+    icon: TestTube,
+    description: "Create comprehensive test cases",
+  },
+  {
+    value: "docs",
+    label: "Generate Docs",
+    icon: FileText,
+    description: "Generate documentation for your code",
+  },
+];
 
 export default function AnalyzePage() {
-  const { code, selectedLanguage, analysisType, current, loading } = useSelector((state: RootState) => state.analysis)
-  const dispatch = useDispatch()
-  const [isFullscreen, setIsFullscreen] = useState(false)
+  const { code, selectedLanguage, analysisType, current, loading } =
+    useSelector((state: RootState) => state.analysis);
+  const dispatch = useDispatch();
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   const handleAnalyze = async () => {
-    if (!code.trim()) return
+    if (!code.trim()) return;
 
     dispatch(
       startAnalysis({
         code,
         language: selectedLanguage,
         type: analysisType,
-      }),
-    )
+      })
+    );
 
     // Simulate API call
     setTimeout(() => {
-      const mockResult = generateMockAnalysisResult(analysisType, selectedLanguage)
+      const mockResult = generateMockAnalysisResult(
+        analysisType,
+        selectedLanguage
+      );
       dispatch(
         completeAnalysis({
           id: current?.id || "",
           result: mockResult,
-        }),
-      )
-    }, 2000)
-  }
+        })
+      );
+    }, 2000);
+  };
 
   const generateMockAnalysisResult = (type: string, language: string) => {
     const results = {
@@ -218,34 +254,41 @@ The function throws errors in the following cases:
 - Invalid or missing userData parameter
 - Network connectivity issues
 - Server-side processing errors`,
-    }
+    };
 
-    return results[type as keyof typeof results] || "Analysis completed successfully."
-  }
+    return (
+      results[type as keyof typeof results] ||
+      "Analysis completed successfully."
+    );
+  };
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
+    const file = event.target.files?.[0];
     if (file) {
-      const reader = new FileReader()
+      const reader = new FileReader();
       reader.onload = (e) => {
-        const content = e.target?.result as string
-        dispatch(setCode(content))
-      }
-      reader.readAsText(file)
+        const content = e.target?.result as string;
+        dispatch(setCode(content));
+      };
+      reader.readAsText(file);
     }
-  }
+  };
 
   const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text)
-  }
+    navigator.clipboard.writeText(text);
+  };
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Code Analysis</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">Analyze your code with AI-powered insights</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            Code Analysis
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-1">
+            Analyze your code with AI-powered insights
+          </p>
         </div>
         <div className="flex space-x-3">
           <Button variant="outline">
@@ -261,7 +304,10 @@ The function throws errors in the following cases:
               className="hidden"
             />
           </Button>
-          <Button variant="outline" onClick={() => setIsFullscreen(!isFullscreen)}>
+          <Button
+            variant="outline"
+            onClick={() => setIsFullscreen(!isFullscreen)}
+          >
             <Maximize2 className="mr-2 h-4 w-4" />
             {isFullscreen ? "Exit" : "Fullscreen"}
           </Button>
@@ -269,26 +315,31 @@ The function throws errors in the following cases:
       </div>
 
       <div
-        className={`grid gap-6 ${isFullscreen ? "fixed inset-0 z-50 bg-gray-50 dark:bg-gray-900 p-6" : "grid-cols-1 lg:grid-cols-2"}`}
+        className={`grid gap-6 ${
+          isFullscreen
+            ? "fixed inset-0 z-50 bg-gray-50 dark:bg-gray-900 p-6"
+            : "grid-cols-1 lg:grid-cols-2"
+        }`}
       >
         {/* Code Input Panel */}
         <Card className="glass">
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className="text-gray-900 dark:text-white">Code Input</CardTitle>
+              <CardTitle className="text-gray-900 dark:text-white">
+                Code Input
+              </CardTitle>
               <div className="flex items-center space-x-2">
-                <Select value={selectedLanguage} onValueChange={(value) => dispatch(setLanguage(value))}>
-                  <SelectTrigger className="w-32">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {languages.map((lang) => (
-                      <SelectItem key={lang} value={lang}>
-                        {lang.charAt(0).toUpperCase() + lang.slice(1)}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <ThemedSelect
+                  value={selectedLanguage}
+                  onValueChange={(value) => dispatch(setLanguage(value))}
+                  className="w-32"
+                >
+                  {languages.map((lang) => (
+                    <ThemedSelectItem key={lang} value={lang}>
+                      {lang.charAt(0).toUpperCase() + lang.slice(1)}
+                    </ThemedSelectItem>
+                  ))}
+                </ThemedSelect>
               </div>
             </div>
           </CardHeader>
@@ -297,17 +348,21 @@ The function throws errors in the following cases:
               placeholder="Paste your code here or upload a file..."
               value={code}
               onChange={(e) => dispatch(setCode(e.target.value))}
-              className="min-h-[400px] font-mono text-sm"
+              className="min-h-[400px] font-mono text-sm bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
             />
 
             {/* Analysis Type Selection */}
             <div className="space-y-3">
-              <h3 className="text-sm font-medium text-gray-900 dark:text-white">Analysis Type</h3>
+              <h3 className="text-sm font-medium text-gray-900 dark:text-white">
+                Analysis Type
+              </h3>
               <div className="grid grid-cols-2 gap-2">
                 {analysisTypes.map((type) => (
                   <Button
                     key={type.value}
-                    variant={analysisType === type.value ? "default" : "outline"}
+                    variant={
+                      analysisType === type.value ? "default" : "outline"
+                    }
                     onClick={() => dispatch(setAnalysisType(type.value as any))}
                     className="h-auto p-3 flex flex-col items-start space-y-1"
                   >
@@ -315,13 +370,19 @@ The function throws errors in the following cases:
                       <type.icon className="h-4 w-4" />
                       <span className="font-medium">{type.label}</span>
                     </div>
-                    <span className="text-xs text-left opacity-70">{type.description}</span>
+                    <span className="text-xs text-left opacity-70">
+                      {type.description}
+                    </span>
                   </Button>
                 ))}
               </div>
             </div>
 
-            <Button onClick={handleAnalyze} disabled={!code.trim() || loading} className="w-full btn-primary">
+            <Button
+              onClick={handleAnalyze}
+              disabled={!code.trim() || loading}
+              className="w-full btn-primary"
+            >
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -341,13 +402,19 @@ The function throws errors in the following cases:
         <Card className="glass">
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className="text-gray-900 dark:text-white">Analysis Results</CardTitle>
+              <CardTitle className="text-gray-900 dark:text-white">
+                Analysis Results
+              </CardTitle>
               {current && (
                 <div className="flex items-center space-x-2">
                   <Badge variant="secondary" className="capitalize">
                     {current.type}
                   </Badge>
-                  <Button variant="outline" size="icon" onClick={() => copyToClipboard(current.result)}>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => copyToClipboard(current.result)}
+                  >
                     <Copy className="h-4 w-4" />
                   </Button>
                   <Button variant="outline" size="icon">
@@ -365,12 +432,14 @@ The function throws errors in the following cases:
               <div className="flex items-center justify-center h-[400px]">
                 <div className="text-center">
                   <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-primary-500" />
-                  <p className="text-gray-600 dark:text-gray-400">Analyzing your code...</p>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Analyzing your code...
+                  </p>
                 </div>
               </div>
             ) : current?.result ? (
               <div className="prose prose-sm dark:prose-invert max-w-none">
-                <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 whitespace-pre-wrap font-mono text-sm">
+                <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 whitespace-pre-wrap font-mono text-sm text-gray-900 dark:text-gray-100">
                   {current.result}
                 </div>
               </div>
@@ -378,7 +447,9 @@ The function throws errors in the following cases:
               <div className="flex items-center justify-center h-[400px]">
                 <div className="text-center">
                   <Search className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Ready to analyze</h3>
+                  <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                    Ready to analyze
+                  </h3>
                   <p className="text-gray-600 dark:text-gray-400">
                     Enter your code and select an analysis type to get started
                   </p>
@@ -389,5 +460,5 @@ The function throws errors in the following cases:
         </Card>
       </div>
     </div>
-  )
+  );
 }
