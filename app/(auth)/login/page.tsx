@@ -101,14 +101,14 @@ export default function LoginPage() {
             <Code2 className="h-12 w-12 text-primary-400" />
           </div>
           <h1 className="text-3xl font-bold text-white mb-2">CodeMind AI</h1>
-          <p className="text-gray-300">Sign in to your account</p>
+          {/* <p className="text-gray-300">Sign in to your account</p> */}
         </div>
 
         <Card className="glass">
           <CardHeader>
-            <CardTitle className="text-2xl text-center text-white">
+            {/* <CardTitle className="text-2xl text-center text-white">
               Welcome Back
-            </CardTitle>
+            </CardTitle> */}
             <CardDescription className="text-center text-gray-300">
               Enter your credentials to access your account
             </CardDescription>
@@ -186,17 +186,17 @@ export default function LoginPage() {
               </div>
             </CardContent>
 
-            <CardFooter className="space-y-4">
+            <CardFooter className="flex flex-col gap-4 p-6">
               <Button type="submit" className="w-full btn-primary">
                 Sign In
               </Button>
 
-              <div className="relative">
+              <div className="relative my-4">
                 <div className="absolute inset-0 flex items-center">
                   <span className="w-full border-t border-gray-600" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-transparent px-2 text-gray-400">
+                  <span className="bg-gray-900 px-3 text-gray-400">
                     Or continue with
                   </span>
                 </div>
@@ -206,17 +206,17 @@ export default function LoginPage() {
                 type="button"
                 variant="outline"
                 onClick={handleGithubLogin}
-                className="w-full bg-white/5 border-gray-600 text-white hover:bg-white/10"
+                className="w-full bg-white/5 border-gray-600 text-white hover:bg-white/10 min-h-[40px]"
               >
                 <Github className="mr-2 h-4 w-4" />
                 GitHub
               </Button>
 
-              <p className="text-center text-sm text-gray-300">
+              <p className="text-center text-sm text-gray-300 mt-2">
                 Don't have an account?{" "}
                 <Link
                   href="/register"
-                  className="text-primary-400 hover:text-primary-300"
+                  className="text-primary-400 hover:text-primary-300 underline"
                 >
                   Sign up
                 </Link>
