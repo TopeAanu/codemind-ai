@@ -1,58 +1,71 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { useDispatch } from "react-redux"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Github, Eye, EyeOff, Code2 } from "lucide-react"
-import { loginStart, loginSuccess, loginFailure } from "@/store/slices/authSlice"
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Github, Eye, EyeOff, Code2 } from "lucide-react";
+import {
+  loginStart,
+  loginSuccess,
+  loginFailure,
+} from "@/store/slices/authSlice";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
-  const [rememberMe, setRememberMe] = useState(false)
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>({})
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
+    {}
+  );
 
-  const dispatch = useDispatch()
-  const router = useRouter()
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   const validateForm = () => {
-    const newErrors: { email?: string; password?: string } = {}
+    const newErrors: { email?: string; password?: string } = {};
 
     if (!email) {
-      newErrors.email = "Email is required"
+      newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = "Email is invalid"
+      newErrors.email = "Email is invalid";
     }
 
     if (!password) {
-      newErrors.password = "Password is required"
+      newErrors.password = "Password is required";
     } else if (password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters"
+      newErrors.password = "Password must be at least 6 characters";
     }
 
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    if (!validateForm()) return
+    if (!validateForm()) return;
 
-    dispatch(loginStart())
+    dispatch(loginStart());
 
     try {
       // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       const mockUser = {
         id: "1",
@@ -60,25 +73,25 @@ export default function LoginPage() {
         name: "John Doe",
         avatar: "/placeholder.svg?height=40&width=40",
         githubConnected: false,
-      }
+      };
 
       dispatch(
         loginSuccess({
           user: mockUser,
           token: "mock-jwt-token",
-        }),
-      )
+        })
+      );
 
-      router.push("/dashboard")
+      router.push("/dashboard");
     } catch (error) {
-      dispatch(loginFailure("Invalid credentials"))
+      dispatch(loginFailure("Invalid credentials"));
     }
-  }
+  };
 
   const handleGithubLogin = () => {
     // Implement GitHub OAuth
-    console.log("GitHub login")
-  }
+    console.log("GitHub login");
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-900 via-gray-900 to-primary-800 p-4">
@@ -93,7 +106,9 @@ export default function LoginPage() {
 
         <Card className="glass">
           <CardHeader>
-            <CardTitle className="text-2xl text-center text-white">Welcome Back</CardTitle>
+            <CardTitle className="text-2xl text-center text-white">
+              Welcome Back
+            </CardTitle>
             <CardDescription className="text-center text-gray-300">
               Enter your credentials to access your account
             </CardDescription>
@@ -111,9 +126,11 @@ export default function LoginPage() {
                   placeholder="john@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="input-field"
+                  className="bg-white/10 border-gray-600 text-white placeholder:text-gray-400 focus:border-primary-400 focus:ring-primary-400"
                 />
-                {errors.email && <p className="text-red-400 text-sm">{errors.email}</p>}
+                {errors.email && (
+                  <p className="text-red-400 text-sm">{errors.email}</p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -127,17 +144,23 @@ export default function LoginPage() {
                     placeholder="Enter your password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="input-field pr-10"
+                    className="bg-white/10 border-gray-600 text-white placeholder:text-gray-400 focus:border-primary-400 focus:ring-primary-400 pr-10"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300"
                   >
-                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
                   </button>
                 </div>
-                {errors.password && <p className="text-red-400 text-sm">{errors.password}</p>}
+                {errors.password && (
+                  <p className="text-red-400 text-sm">{errors.password}</p>
+                )}
               </div>
 
               <div className="flex items-center justify-between">
@@ -145,13 +168,19 @@ export default function LoginPage() {
                   <Checkbox
                     id="remember"
                     checked={rememberMe}
-                    onCheckedChange={(checked) => setRememberMe(checked as boolean)}
+                    onCheckedChange={(checked) =>
+                      setRememberMe(checked as boolean)
+                    }
+                    className="border-gray-600 data-[state=checked]:bg-primary-600 data-[state=checked]:border-primary-600 data-[state=checked]:text-white"
                   />
                   <Label htmlFor="remember" className="text-sm text-gray-300">
                     Remember me
                   </Label>
                 </div>
-                <Link href="/forgot-password" className="text-sm text-primary-400 hover:text-primary-300">
+                <Link
+                  href="/forgot-password"
+                  className="text-sm text-primary-400 hover:text-primary-300"
+                >
                   Forgot password?
                 </Link>
               </div>
@@ -167,7 +196,9 @@ export default function LoginPage() {
                   <span className="w-full border-t border-gray-600" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-transparent px-2 text-gray-400">Or continue with</span>
+                  <span className="bg-transparent px-2 text-gray-400">
+                    Or continue with
+                  </span>
                 </div>
               </div>
 
@@ -183,7 +214,10 @@ export default function LoginPage() {
 
               <p className="text-center text-sm text-gray-300">
                 Don't have an account?{" "}
-                <Link href="/register" className="text-primary-400 hover:text-primary-300">
+                <Link
+                  href="/register"
+                  className="text-primary-400 hover:text-primary-300"
+                >
                   Sign up
                 </Link>
               </p>
@@ -192,5 +226,5 @@ export default function LoginPage() {
         </Card>
       </div>
     </div>
-  )
+  );
 }

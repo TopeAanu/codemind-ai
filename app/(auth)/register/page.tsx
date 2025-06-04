@@ -127,7 +127,7 @@ export default function RegisterPage() {
                   placeholder="John Doe"
                   value={formData.name}
                   onChange={(e) => handleInputChange("name", e.target.value)}
-                  className="input-field"
+                  className="bg-white/10 border-gray-600 text-white placeholder:text-gray-400 focus:border-primary-400 focus:ring-primary-400"
                 />
                 {errors.name && <p className="text-red-400 text-sm">{errors.name}</p>}
               </div>
@@ -142,7 +142,7 @@ export default function RegisterPage() {
                   placeholder="john@example.com"
                   value={formData.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
-                  className="input-field"
+                  className="ibg-white/10 border-gray-600 text-white placeholder:text-gray-400 focus:border-primary-400 focus:ring-primary-400"
                 />
                 {errors.email && <p className="text-red-400 text-sm">{errors.email}</p>}
               </div>
@@ -158,7 +158,7 @@ export default function RegisterPage() {
                     placeholder="Create a strong password"
                     value={formData.password}
                     onChange={(e) => handleInputChange("password", e.target.value)}
-                    className="input-field pr-10"
+                    className="bg-white/10 border-gray-600 text-white placeholder:text-gray-400 focus:border-primary-400 focus:ring-primary-400 pr-10"
                   />
                   <button
                     type="button"
@@ -182,7 +182,7 @@ export default function RegisterPage() {
                     placeholder="Confirm your password"
                     value={formData.confirmPassword}
                     onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
-                    className="input-field pr-10"
+                    className="bg-white/10 border-gray-600 text-white placeholder:text-gray-400 focus:border-primary-400 focus:ring-primary-400 pr-10"
                   />
                   <button
                     type="button"
